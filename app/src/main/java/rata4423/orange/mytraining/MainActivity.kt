@@ -118,7 +118,7 @@ class HomeViewModel: ViewModel() {
         progressValue.value = tmp + 1f
     }
 }
-
+//TODO ボタンでタイマーが起動できるようにする
 @Composable
 fun HomeScreen(viewModel: HomeViewModel = viewModel()) {
     val progressValue: Float by viewModel.progressValue.observeAsState(0f)
