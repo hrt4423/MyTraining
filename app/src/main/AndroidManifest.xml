@@ -13,7 +13,7 @@
         android:theme="@style/Theme.MyTraining"
         tools:targetApi="31">
         <activity
-            android:name=".component.Title"
+            android:name=".components.Title"
             android:exported="false"
             android:label="@string/title_activity_title"
             android:theme="@style/Theme.MyTraining" />

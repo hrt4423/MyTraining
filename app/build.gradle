@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace 'rata4423.orange.mytraining'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "rata4423.orange.mytraining"
