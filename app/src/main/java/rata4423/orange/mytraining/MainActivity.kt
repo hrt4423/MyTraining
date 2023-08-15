@@ -30,6 +30,8 @@ import androidx.lifecycle.ViewModel
 import rata4423.orange.mytraining.ui.theme.MyTrainingTheme
 import androidx.lifecycle.viewmodel.compose.viewModel
 
+import rata4423.orange.mytraining.component.Greeting
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,13 +49,13 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
+//@Composable
+//fun Greeting(name: String, modifier: Modifier = Modifier) {
+//    Text(
+//        text = "Hello $name!",
+//        modifier = modifier
+//    )
+//}
 
 @Composable
 fun Meter(_progress: Float = 0f) {
