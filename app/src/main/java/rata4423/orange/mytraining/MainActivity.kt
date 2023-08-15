@@ -2,7 +2,6 @@ package rata4423.orange.mytraining
 
 import android.os.Bundle
 import android.os.CountDownTimer
-//import android.util.Size
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 //import androidx.annotation.Size
@@ -14,24 +13,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
-
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
-
 import rata4423.orange.mytraining.ui.theme.MyTrainingTheme
-
-import rata4423.orange.mytraining.components.Greeting
-import rata4423.orange.mytraining.components.Meter
 import rata4423.orange.mytraining.screen.HomeScreen
 
 class MainActivity : ComponentActivity() {

@@ -8,6 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 
+//一旦使わない。ナビゲーションはMainActivityで行う。
 @Composable
 fun NavHost() {
     val navController = rememberNavController()
