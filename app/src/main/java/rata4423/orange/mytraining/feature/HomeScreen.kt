@@ -1,4 +1,4 @@
-package rata4423.orange.mytraining.screen
+package rata4423.orange.mytraining.feature
 
 import android.os.CountDownTimer
 import androidx.compose.foundation.layout.Column
