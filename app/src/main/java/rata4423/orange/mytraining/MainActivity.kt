@@ -13,6 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import rata4423.orange.mytraining.components.TimerScreen
 import rata4423.orange.mytraining.ui.theme.MyTrainingTheme
 import rata4423.orange.mytraining.feature.HomeScreen
 
@@ -29,7 +30,7 @@ class MainActivity : ComponentActivity() {
                     val navController = rememberNavController()
                     NavHost(navController = navController, startDestination = "HomeScreen") {
                         composable(route = "HomeScreen") {
-                            HomeScreen()
+                            TimerScreen()
                         }
                     }
                 }

@@ -1,14 +1,10 @@
 package rata4423.orange.mytraining.components
 
-import android.os.CountDownTimer
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.runtime.ComposeCompilerApi
 import androidx.compose.runtime.Composable
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
@@ -20,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import rata4423.orange.mytraining.ui.theme.MyTrainingTheme
 
 @Composable
-fun Meter(_progress: Float = 0f) {
+fun Meter(progress: Float = 0f) {
     val circleAngle = 360f //円の角度（固定）
     val max = 300f //進捗の最大値
     val angle = 240f //メーターの角度
@@ -62,7 +58,8 @@ fun Meter(_progress: Float = 0f) {
             drawArc(
                 color = Color.Cyan,
                 startAngle = startAngle,
-                sweepAngle = angle / max * _progress,
+                //ゲージが溢れないように
+                sweepAngle = if(progress < max) { angle / max * progress } else { angle / max * max },
                 useCenter = false,
                 size = Size(size.width, size.height),
                 style = Stroke(
