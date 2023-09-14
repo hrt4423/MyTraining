@@ -13,17 +13,23 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import rata4423.orange.mytraining.components.Meter
 
 import rata4423.orange.mytraining.ui.theme.MyTrainingTheme
+import java.util.Timer
+import kotlin.concurrent.schedule
 
 class TimerScreenViewModel: ViewModel() {
     val progressValue = MutableLiveData(0f)
     fun valueUp() {
-        val tmp = progressValue.value ?: 0f
-        progressValue.value = tmp + 1f
+        viewModelScope.launch {
+            val tmp = progressValue.value ?: 0f
+            progressValue.value = tmp + 1f
+        }
     }
 }
 
@@ -31,36 +37,17 @@ class TimerScreenViewModel: ViewModel() {
 fun TimerScreen(viewModel: TimerScreenViewModel = viewModel()) {
     val progressValue: Float by viewModel.progressValue.observeAsState(0f)
 
-    val timer = object : CountDownTimer(10000, 1000) {
-        override fun onTick(millisUntilFinished: Long) {
-            viewModel.valueUp()
-        }
-        override fun onFinish() {
-
-        }
-    }
-
-//    LaunchedEffect(progressValue) {
-//        if(progressValue >= 7f){
-//            timer.cancel()
-//        }
-//    }
-    //todo: cancel処理を動かす
     LaunchedEffect(Unit) {
-        //timer.start()
-        //delay(7000)
-        //動きはした
-        //timer.cancel()
+        //画面読込時の処理
+        Timer().schedule(0, 1000){
+            if(progressValue < 9f) {
+                viewModel.valueUp()
+            } else {
+                this.cancel()
+            }
+        }
     }
 
-
-//    val context = LocalContext.current
-//    LaunchedEffect(progressValue) {
-//        if(progressValue >= 7){
-//            timer.cancel()
-//            Toast.makeText(context, "canceled", Toast.LENGTH_SHORT).show()
-//        }
-//    }
     
 //  レイアウト
     Column() {
@@ -75,11 +62,11 @@ fun TimerScreen(viewModel: TimerScreenViewModel = viewModel()) {
         )
 
         Row() {
-            Button(onClick = { timer.start() }) {
+            Button(onClick = { /*todo*/ }) {
                 Text(text = "Start")
             }
             //cancel()が機能していません。スコープの問題？
-            Button(onClick = { timer.cancel() }) {
+            Button(onClick = { /*todo*/ }) {
                 Text(text = "Stop")
             }
         }
