@@ -13,7 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import rata4423.orange.mytraining.components.TimerScreen
+import rata4423.orange.mytraining.feature.TimerScreen
 import rata4423.orange.mytraining.ui.theme.MyTrainingTheme
 import rata4423.orange.mytraining.feature.HomeScreen
 
@@ -28,8 +28,8 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     val navController = rememberNavController()
-                    NavHost(navController = navController, startDestination = "HomeScreen") {
-                        composable(route = "HomeScreen") {
+                    NavHost(navController = navController, startDestination = "TimerScreen") {
+                        composable(route = "TimerScreen") {
                             TimerScreen()
                         }
                     }
@@ -39,7 +39,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 //TODO ボタンでタイマーが起動できるようにする
-//todo ナビゲーション
+//TODO ナビゲーション
 
 @Preview(showBackground = true)
 @Composable
