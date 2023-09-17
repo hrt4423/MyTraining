@@ -53,74 +53,53 @@ class TimerScreenViewModel: ViewModel() {
 //        viewModel.valueDown()
 //    }
 //}
-
 @Composable
 fun TimerScreen(viewModel: TimerScreenViewModel = viewModel()) {
     val progressValue: Float by viewModel.progressValue.observeAsState(0f)
 
-    //タイマーの監視
-    //タイマー用のコルーチン
-    val coroutineScope = rememberCoroutineScope()
-    //タイマーが実行中かを追跡するフラグ
+//    val coroutineScope = rememberCoroutineScope()
     val isTimerRunning = remember { mutableStateOf(false) }
-    //タイマータスク
-    val timerTask = remember { mutableStateOf<TimerTask?>(null)}
+    val timerTask = remember { mutableStateOf<CountDownTimer?>(null) }
 
-    LaunchedEffect(Unit) {
-
-    }
-
-//  レイアウト
-    Column() {
-        Text(
-            text = "TimerScreen"
-        )
+    Column {
+        Text(text = "TimerScreen")
 
         Meter(progressValue)
 
-        Text(
-            text =  "Value : $progressValue"
-        )
+        Text(text = "Value : $progressValue")
 
-        Row() {
+        Row {
             Button(
                 onClick = {
                     if (!isTimerRunning.value) {
-                        // タイマーが実行中でなければ、新しいタイマーを作成
-                        val task = object : TimerTask() {
-                            override fun run() {
+                        val task = object : CountDownTimer((progressValue * 1000).toLong(), 1000) {
+                            override fun onTick(millisUntilFinished: Long) {
                                 viewModel.valueDown()
+                            }
+
+                            override fun onFinish() {
+                                isTimerRunning.value = false
                             }
                         }
                         timerTask.value = task
 
-                        //このコルーチンでタイマーを実行
-                        coroutineScope.launch {
-                            // タイマーを1秒ごとに実行
-                            timerTask.value?.let {
-                                withContext(Dispatchers.IO) {
-                                    Timer().scheduleAtFixedRate(it, 0, 1000)
-                                }
-                            }
-                        }
-                        //フラグを更新
+                        // タイマータスクを開始
+                        task.start()
+
                         isTimerRunning.value = true
                     }
                 }
-
             ) {
                 Text(text = "Start")
             }
-            //cancel()が機能していません。スコープの問題？
-            //TODO コルーチンの実装
+
             Button(
                 onClick = {
                     timerTask.value?.cancel()
-                    //フラグを更新
                     isTimerRunning.value = false
                 }
             ) {
-                Text(text = "Stop")
+                Text(text = "Cancel")
             }
         }
     }
@@ -130,6 +109,6 @@ fun TimerScreen(viewModel: TimerScreenViewModel = viewModel()) {
 @Composable
 fun TimerScreenPreview() {
     MyTrainingTheme {
-        TimerScreen()
+        //TimerScreen()
     }
 }
