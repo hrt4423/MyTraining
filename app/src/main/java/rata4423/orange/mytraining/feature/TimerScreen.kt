@@ -4,6 +4,8 @@ import android.os.CountDownTimer
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -13,6 +15,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -53,6 +56,7 @@ class TimerScreenViewModel: ViewModel() {
 //        viewModel.valueDown()
 //    }
 //}
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TimerScreen(viewModel: TimerScreenViewModel = viewModel()) {
     val progressValue: Float by viewModel.progressValue.observeAsState(0f)
@@ -67,6 +71,13 @@ fun TimerScreen(viewModel: TimerScreenViewModel = viewModel()) {
         Meter(progressValue)
 
         Text(text = "Value : $progressValue")
+
+        var text by remember { mutableStateOf("") }
+
+        OutlinedTextField(
+            value = text,
+            onValueChange = { text =  it }
+        )
 
         Row {
             Button(
