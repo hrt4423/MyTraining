@@ -38,7 +38,6 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-//TODO ボタンでタイマーが起動できるようにする
 //TODO ナビゲーション
 
 @Preview(showBackground = true)
