@@ -4,9 +4,8 @@ import android.os.CountDownTimer
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
@@ -79,21 +78,22 @@ fun TimerScreen(viewModel: TimerScreenViewModel = viewModel()) {
         //TODO: メーターに応用
         //TODO: 入力値を秒に変換
         Row(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             OutlinedTextField(
                 modifier = Modifier
                     .weight(1f)
-                    .size(100.dp, 40.dp)
-                    .padding(10.dp),
+                    .requiredWidth(150.dp),
+//                    .size(100.dp, 40.dp),
+//                    .padding(10.dp),
                 value = stringTimerMin,
                 onValueChange = { stringTimerMin =  it },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Number,
                     imeAction = ImeAction.Done),
                 keyboardActions = KeyboardActions(onDone = {
-                    if(stringTimerMin.equals("")) {
+                    if(stringTimerMin == "") {
                         viewModel.setProgressValue(0)
                     }else{
                         viewModel.setProgressValue(Integer.parseInt(stringTimerMin))
@@ -104,15 +104,20 @@ fun TimerScreen(viewModel: TimerScreenViewModel = viewModel()) {
             OutlinedTextField(
                 modifier = Modifier
                     .weight(1f)
-                    .size(100.dp, 40.dp)
-                    .padding(10.dp),
+                    .requiredWidth(150.dp),
+//                    .size(100.dp, 40.dp),
+//                    .padding(10.dp)
                 value = stringTimerSec,
                 onValueChange = { stringTimerSec =  it },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Number,
                     imeAction = ImeAction.Done),
                 keyboardActions = KeyboardActions(onDone = {
-                    viewModel.setProgressValue(Integer.parseInt(stringTimerMin))
+                    if(stringTimerMin == "") {
+                        viewModel.setProgressValue(0)
+                    }else{
+                        viewModel.setProgressValue(Integer.parseInt(stringTimerMin))
+                    }
                     focusManager.clearFocus()
                 })
             )
