@@ -1,27 +1,21 @@
 package rata4423.orange.mytraining.components
 
-import android.widget.Toast
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-
 import rata4423.orange.mytraining.ui.theme.MyTrainingTheme
 
 @Composable
-fun Meter(progress: Float = 0f) {
+fun Meter(progress: Float = 0f, max: Float = 0f) {
     val circleAngle = 360f //円の角度（固定）
-    val max = 10f //進捗の最大値
     val angle = 240f //メーターの角度
     val progressWidth = 14.dp //メーターの幅
     val backgroundWidth = 18.dp //外枠を描画する図形の幅
@@ -62,7 +56,11 @@ fun Meter(progress: Float = 0f) {
                 color = Color.Cyan,
                 startAngle = startAngle,
                 //ゲージが溢れないように
-                sweepAngle = if(progress < max) { angle / max * progress } else { angle / max * max },
+                sweepAngle = if (progress < max) {
+                    angle / max * progress
+                } else {
+                    angle / max * max
+                },
                 useCenter = false,
                 size = Size(size.width, size.height),
                 style = Stroke(
