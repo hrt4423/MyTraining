@@ -93,7 +93,7 @@ fun TimerScreen(viewModel: TimerScreenViewModel = viewModel()) {
                     keyboardType = KeyboardType.Number,
                     imeAction = ImeAction.Done),
                 keyboardActions = KeyboardActions(onDone = {
-                    if(stringTimerMin.equals("")){
+                    if(stringTimerMin.equals("")) {
                         viewModel.setProgressValue(0)
                     }else{
                         viewModel.setProgressValue(Integer.parseInt(stringTimerMin))
