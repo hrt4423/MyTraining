@@ -52,6 +52,11 @@ class TimerScreenViewModel: ViewModel() {
     }
 }
 
+fun convertToSec(min :Int) {
+    val sec Int()
+    return sec
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TimerScreen(viewModel: TimerScreenViewModel = viewModel()) {
@@ -74,7 +79,6 @@ fun TimerScreen(viewModel: TimerScreenViewModel = viewModel()) {
         val focusManager = LocalFocusManager.current
 
         //TODO: 入力フォームを分離（入力時だけ表示など）
-        //TODO: 分、秒の入力
         //TODO: メーターに応用
         //TODO: 入力値を秒に変換
         Row(
@@ -85,8 +89,6 @@ fun TimerScreen(viewModel: TimerScreenViewModel = viewModel()) {
                 modifier = Modifier
                     .weight(1f)
                     .requiredWidth(150.dp),
-//                    .size(100.dp, 40.dp),
-//                    .padding(10.dp),
                 value = stringTimerMin,
                 onValueChange = { stringTimerMin =  it },
                 keyboardOptions = KeyboardOptions(
@@ -105,8 +107,6 @@ fun TimerScreen(viewModel: TimerScreenViewModel = viewModel()) {
                 modifier = Modifier
                     .weight(1f)
                     .requiredWidth(150.dp),
-//                    .size(100.dp, 40.dp),
-//                    .padding(10.dp)
                 value = stringTimerSec,
                 onValueChange = { stringTimerSec =  it },
                 keyboardOptions = KeyboardOptions(
@@ -132,7 +132,6 @@ fun TimerScreen(viewModel: TimerScreenViewModel = viewModel()) {
                             override fun onTick(millisUntilFinished: Long) {
                                 viewModel.valueDown()
                             }
-
                             override fun onFinish() {
                                 isTimerRunning.value = false
                             }
