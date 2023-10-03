@@ -76,6 +76,6 @@ fun Meter(progress: Float = 0f, max: Float = 0f) {
 @Composable
 fun MeterPreview() {
     MyTrainingTheme {
-//        Meter(180f)
+        Meter()
     }
 }

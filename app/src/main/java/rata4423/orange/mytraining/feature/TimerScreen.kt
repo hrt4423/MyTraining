@@ -62,27 +62,29 @@ fun toSec(min: Int): Int {
 @Composable
 fun TimerScreen(viewModel: TimerScreenViewModel = viewModel()) {
     val progressValue: Float by viewModel.progressValue.observeAsState(0f)
-    var timerValue: Int by remember { mutableStateOf(0) }
+
 
     val isTimerRunning = remember { mutableStateOf(false) }
     val timerTask = remember { mutableStateOf<CountDownTimer?>(null) }
 
     Column {
-
+        var timerValue: Int by remember { mutableStateOf(0) }
         Text(text = "TimerScreen")
 
         //TODO: 引数に最大値を追加
-        Meter(progressValue, timerValue.toFloat())
+        Meter(progressValue, 50f)
 
         Text(text = "Value : $progressValue")
+        Text(text = "timerValue :  $timerValue")
 
-        var stringTimerSec by remember { mutableStateOf("0") }
-        var stringTimerMin by remember { mutableStateOf("0") }
+        var stringTimerSec by remember { mutableStateOf("") }
+        var stringTimerMin by remember { mutableStateOf("") }
 
         val focusManager = LocalFocusManager.current
 
         //TODO: 入力フォームを分離（入力時だけ表示など）
         //TODO: 変数の管理（追加、クリアなど）
+        //TODO: タイマーが動かない。変数に代入ができていない？
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly
@@ -119,13 +121,13 @@ fun TimerScreen(viewModel: TimerScreenViewModel = viewModel()) {
                     imeAction = ImeAction.Done),
                 keyboardActions = KeyboardActions(onDone = {
                     //TODO 分を加算
-                    if(stringTimerMin == "") {
+                    if(stringTimerSec == "") {
 //                        viewModel.setProgressValue(0)
                         timerValue.plus(0)
-                    }else{
+                    } else {
                         //viewModel.setProgressValue(Integer.parseInt(stringTimerMin))
                         timerValue.plus(Integer.parseInt(stringTimerSec))
-                        viewModel.setProgressValue(timerValue)
+                        //viewModel.setProgressValue(timerValue)
                     }
                     focusManager.clearFocus()
                 })
@@ -135,6 +137,7 @@ fun TimerScreen(viewModel: TimerScreenViewModel = viewModel()) {
         Row {
             Button(
                 onClick = {
+                    viewModel.setProgressValue(timerValue)
                     if (!isTimerRunning.value) {
                         //タイマーに設定
                         val task = object : CountDownTimer((progressValue * 1000).toLong(), 1000) {
