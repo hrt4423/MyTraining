@@ -38,6 +38,9 @@ class TimerScreenViewModel: ViewModel() {
     fun setProgressValue(newValue: Int) {
         progressValue.value = newValue.toFloat()
     }
+    fun addProgressValue(addValue: Int) {
+        progressValue.value = progressValue.value?.plus(addValue.toFloat())
+    }
     fun valueUp() {
         viewModelScope.launch {
             val tmp = progressValue.value ?: 0f
@@ -51,16 +54,15 @@ class TimerScreenViewModel: ViewModel() {
         }
     }
 }
-
-fun convertToSec(min :Int) {
-    val sec Int()
-    return sec
+fun toSec(min: Int): Int {
+    return min * 60
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TimerScreen(viewModel: TimerScreenViewModel = viewModel()) {
     val progressValue: Float by viewModel.progressValue.observeAsState(0f)
+    var timerValue: Int by remember { mutableStateOf(0) }
 
     val isTimerRunning = remember { mutableStateOf(false) }
     val timerTask = remember { mutableStateOf<CountDownTimer?>(null) }
@@ -70,17 +72,17 @@ fun TimerScreen(viewModel: TimerScreenViewModel = viewModel()) {
         Text(text = "TimerScreen")
 
         //TODO: 引数に最大値を追加
-        Meter(progressValue, 10f)
+        Meter(progressValue, timerValue.toFloat())
 
         Text(text = "Value : $progressValue")
 
         var stringTimerSec by remember { mutableStateOf("0") }
         var stringTimerMin by remember { mutableStateOf("0") }
+
         val focusManager = LocalFocusManager.current
 
         //TODO: 入力フォームを分離（入力時だけ表示など）
-        //TODO: メーターに応用
-        //TODO: 入力値を秒に変換
+        //TODO: 変数の管理（追加、クリアなど）
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly
@@ -96,10 +98,13 @@ fun TimerScreen(viewModel: TimerScreenViewModel = viewModel()) {
                     imeAction = ImeAction.Done),
                 keyboardActions = KeyboardActions(onDone = {
                     if(stringTimerMin == "") {
-                        viewModel.setProgressValue(0)
-                    }else{
-                        viewModel.setProgressValue(Integer.parseInt(stringTimerMin))
+                        //viewModel.setProgressValue(0)
+                        timerValue.plus(0)
+                    } else {
+                        //viewModel.setProgressValue(toSec(Integer.parseInt(stringTimerMin)))
+                        timerValue.plus(toSec(Integer.parseInt(stringTimerMin)))
                     }
+                    //右のテキストボックスにカーソルを移動
                     focusManager.moveFocus(FocusDirection.Right)
                 })
             )
@@ -113,10 +118,14 @@ fun TimerScreen(viewModel: TimerScreenViewModel = viewModel()) {
                     keyboardType = KeyboardType.Number,
                     imeAction = ImeAction.Done),
                 keyboardActions = KeyboardActions(onDone = {
+                    //TODO 分を加算
                     if(stringTimerMin == "") {
-                        viewModel.setProgressValue(0)
+//                        viewModel.setProgressValue(0)
+                        timerValue.plus(0)
                     }else{
-                        viewModel.setProgressValue(Integer.parseInt(stringTimerMin))
+                        //viewModel.setProgressValue(Integer.parseInt(stringTimerMin))
+                        timerValue.plus(Integer.parseInt(stringTimerSec))
+                        viewModel.setProgressValue(timerValue)
                     }
                     focusManager.clearFocus()
                 })
